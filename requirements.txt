@@ -1,0 +1,10 @@
+# --- Selena Core Dependencies ---
+crewai==0.28.8
+langchain-openai
+langchain-groq
+python-dotenv
+# --- Solana Interface ---
+solana
+anchorpy
+# --- Testing ---
+pytest
