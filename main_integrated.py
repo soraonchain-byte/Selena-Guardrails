@@ -1,142 +1,77 @@
-"""
-Project: Selena Guardrails (Solana Frontier Hackathon 2026)
-Status: V3.2 (Raydium Backbone Integration)
-Truth of Source: Sync with main_integrated.py (Pydantic 2.11.10)
-"""
-
 import os
-import time
-import json
 import warnings
-import requests
-from typing import Dict, List, Type
 from dotenv import load_dotenv
+from src.logic.raydium_fetcher import RaydiumProvider
 from crewai import Agent, Task, Crew, Process
-from crewai.tools import BaseTool
+from langchain_groq import ChatGroq
 
-warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=UserWarning, module='pydantic')
 load_dotenv()
 
-# --- 1. REAL-WORLD TOOLS (Raydium & Market Logic) ---
+def main():
+    raydium = RaydiumProvider()
+    data = raydium.get_token_pair_data()
 
-class SolanaPriceTool(BaseTool):
-    name: str = "solana_price_checker"
-    description: str = "Get the current price of SOL in USD to calculate risk exposure."
+    llm = ChatGroq(
+        temperature=0, 
+        groq_api_key=os.getenv("GROQ_API_KEY"), 
+        model_name="llama-3.1-8b-instant" 
+    )
 
-    def _run(self) -> str:
-        try:
-            response = requests.get("https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd")
-            price = response.json()['solana']['usd']
-            return f"Current SOL Price: ${price}"
-        except:
-            return "Could not fetch price, defaulting to $140 for risk calculation."
+    # Memposisikan satu agen sebagai 'Council' untuk efisiensi
+    selena_oracle = Agent(
+        role='Selena Security Oracle',
+        goal='Orchestrate multi-layer security analysis for DeFi transactions.',
+        backstory="""You represent the collective intelligence of the Selena Guardrails system. 
+        You process data through internal Quant, Risk, and Validation modules 
+        to ensure zero-error execution on Solana.""",
+        verbose=True, 
+        llm=llm,
+        allow_delegation=False
+    )
 
-class RaydiumSwapTool(BaseTool):
-    name: str = "raydium_swap_tool"
-    description: str = "Get pool info and program ID for Raydium V4 / AMM swaps."
+    print("\n" + "="*60)
+    print(f"🏛️ SELENA SYSTEM ENGINE: {data['status']}")
+    print(f"📊 TARGET: {data['protocol']} | SOURCE: {data['source']}")
+    print("="*60)
 
-    def _run(self, amount_sol: float) -> str:
-        # Raydium V4 Program ID (The standard for most SOL swaps)
-        # Target for Selena to Validate: 675kPX9...
-        raydium_v4_id = "675kPX9MHTjS2zt1qfr1NYHuHdiXMSME6u6YFp6Rp87"
+    analysis_task = Task(
+        description=f"""
+        PERFORM MULTI-LAYERED ANALYSIS FOR 5.0 SOL SWAP:
         
-        return json.dumps({
-            "target_program": raydium_v4_id,
-            "dex_name": "Raydium V4",
-            "amount_in_sol": amount_sol,
-            "status": "Quote Generated"
-        })
-
-# --- 2. SMART CONTRACT VALIDATOR (On-Chain Truth) ---
-
-class Intent:
-    def __init__(self, amount_lamports: int, target_program: str):
-        self.amount = amount_lamports
-        self.target_program = target_program
-
-class SelenaProgramClient:
-    def __init__(self, program_id: str):
-        self.program_id = program_id
-        self.last_tx_timestamp = 0
-
-    def validate_on_chain(self, intent: Intent) -> Dict:
-        now = int(time.time())
-        # Safety Enforcement from lib.rs
-        if now < self.last_tx_timestamp + 5:
-            return {"status": "FAILED", "error": "RateLimitExceeded"}
-        if intent.amount > 1_000_000_000: # 1 SOL Limit
-            return {"status": "FAILED", "error": "ExceedsDynamicLimit"}
+        1. [QUANT MODULE]: Analyze slippage for ${data['price']} price 
+           against ${data['liquidity']:,} liquidity.
+        2. [RISK MODULE]: Validate if price impact exceeds 0.5%.
+        3. [VALIDATOR MODULE]: Confirm protocol compliance for Raydium V4.
         
-        self.last_tx_timestamp = now
-        return {"status": "SUCCESS", "signature": "5kPz...raydium_selena_v5", "event": "IntentValidated"}
-
-# Your Deployed Program ID
-selena_client = SelenaProgramClient("4ix6WdzLbEUxfGDUL1oxnqbDPmVpx2wHo2ConEDZTwar")
-
-# --- 3. THE AGENT BACKBONE (The Brains) ---
-
-MODEL_NAME = "groq/llama3-70b-8192"
-
-sentinel = Agent(
-    role='Risk Sentinel',
-    goal='Monitor market conditions and enforce safety BPS for Raydium trades.',
-    backstory='A security-focused AI that ensures capital is never over-exposed during swaps.',
-    tools=[SolanaPriceTool()],
-    llm=MODEL_NAME,
-    verbose=True
-)
-
-executor = Agent(
-    role='Raydium Protocol Specialist',
-    goal='Construct Raydium-compliant Intent structs and handle liquidity mapping.',
-    backstory='Expert in Solana DEX protocols, specifically Raydium AMM structures.',
-    tools=[RaydiumSwapTool()],
-    llm=MODEL_NAME,
-    verbose=True
-)
-
-# --- 4. INTEGRATED WORKFLOW ---
-
-def run_selena_raydium_backbone(user_request: str):
-    print("\n" + "="*50)
-    print("🔥 SELENA BACKBONE: RAYDIUM ECOSYSTEM ACTIVATED")
-    print("="*50)
-
-    # Task 1: Risk Assessment
-    task_risk = Task(
-        description=f"Analyze: '{user_request}'. Check SOL price and give a risk clear-signal.",
-        agent=sentinel,
-        expected_output="Risk report with current SOL price and security clearance."
+        OUTPUT FORMAT:
+        - 🧠 QUANT METRICS: (Mathematical breakdown)
+        - 🛡️ RISK ASSESSMENT: (Clearance status)
+        - 🚀 EXECUTION INTENT: (Ready for on-chain validation)
+        - 🧾 SUMMARY: Confidence Score (0-100%)
+        """,
+        agent=selena_oracle,
+        expected_output="A structured multi-layer security report."
     )
 
-    # Task 2: Raydium Intent Mapping
-    task_intent = Task(
-        description="Fetch Raydium Program ID and convert the trade amount to Lamports.",
-        agent=executor,
-        expected_output="JSON including 'lamports' and 'target_program' for Raydium."
+    selena_crew = Crew(
+        agents=[selena_oracle],
+        tasks=[analysis_task],
+        process=Process.sequential,
+        verbose=True
     )
 
-    crew = Crew(
-        agents=[sentinel, executor],
-        tasks=[task_risk, task_intent],
-        process=Process.sequential
-    )
-
-    print("🧠 Agents are interacting with Raydium Protocol logic...")
-    # Simulated Bridge from AI output to Guardrails
-    # Program ID 675kPX... is Raydium's AMM Program
-    raydium_intent = Intent(
-        amount_lamports=500_000_000, 
-        target_program="675kPX9MHTjS2zt1qfr1NYHuHdiXMSME6u6YFp6Rp87"
-    )
-    
-    print(f"⚖️ [Guardrails] Validating Raydium Intent...")
-    result = selena_client.validate_on_chain(raydium_intent)
-
-    if result["status"] == "SUCCESS":
-        print(f"✅ [SUCCESS] {result['event']} - Raydium transaction cleared by Selena.")
-    else:
-        print(f"❌ [BLOCKED] {result['error']} - Safety violation detected.")
+    print("\n🚀 Selena is initiating autonomous reasoning pipeline...")
+    try:
+        result = selena_crew.kickoff()
+        print("\n" + "="*60)
+        print("🏛️ SELENA FINAL SYSTEM VERDICT")
+        print("="*60)
+        print(result)
+        print("\n✅ READY FOR ON-CHAIN VALIDATION")
+        print("="*60)
+    except Exception as e:
+        print(f"❌ Execution Error: {e}")
 
 if __name__ == "__main__":
-    run_selena_raydium_backbone("Swap 0.5 SOL for RAY on Raydium")
+    main()
