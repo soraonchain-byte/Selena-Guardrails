@@ -1,4 +1,8 @@
+<img width="5008" height="952" alt="Banner-Sora" src="https://github.com/user-attachments/assets/35a2d602-aa7c-4563-891a-4a9b2c6b351b" />
+
+---
 # 🛡️ Selena Guardrails: Multi-Agent Security Layer for Solana
+<img width="3894" height="703" alt="Selena_logo_banner" src="https://github.com/user-attachments/assets/253074ea-a5ad-45f1-accd-eb81a89ffa38" />
 
 Selena is an **Autonomous Security Oracle** designed to protect the Agentic Economy on Solana. It acts as a high-fidelity validation layer that bridges off-chain AI reasoning with on-chain financial safety, specifically optimized for the Raydium Protocol.
 
