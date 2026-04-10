@@ -178,7 +178,7 @@ Ready for Validation
 
 🧾 SUMMARY:
 
-Confidence Score: 99.99%
+<img width="634" height="318" alt="image" src="https://github.com/user-attachments/assets/027c708f-d184-4846-856e-8e41134a4b57" />
 
 ---
 
