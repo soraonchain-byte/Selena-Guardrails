@@ -4,62 +4,205 @@
 # 🛡️ Selena Guardrails: Multi-Agent Security Layer for Solana
 <img width="3894" height="703" alt="Selena_logo_banner" src="https://github.com/user-attachments/assets/253074ea-a5ad-45f1-accd-eb81a89ffa38" />
 
-Selena is an **Autonomous Security Oracle** designed to protect the Agentic Economy on Solana. It acts as a high-fidelity validation layer that bridges off-chain AI reasoning with on-chain financial safety, specifically optimized for the Raydium Protocol.
+![Banner](https://github.com/user-attachments/assets/35a2d602-aa7c-4563-891a-4a9b2c6b351b)
 
-## 🏛️ The Problem & Vision
-In the emerging **Agentic Economy**, autonomous AI agents manage capital. However, these agents often lack real-time risk awareness, making them vulnerable to slippage, sandwich attacks, and liquidity traps. 
-
-**Selena** solves this by providing a **Multi-Layered Guardrail System** that intercept AI intents, performs deep-tier risk analysis, and issues security clearances before any transaction touches the blockchain.
-
-## ✨ Key Features
-- **Multi-Agent Consensus Pipeline**: Uses specialized AI agents (Quant, Risk, and Validator) to audit transactions.
-- **Dynamic Slippage Oracle**: Real-time calculation of price impact vs pool depth.
-- **Resilient Data Intelligence**: Features a **Verified Simulation Layer** to maintain security auditing even during network congestion or API rate-limiting.
-- **Raydium V4 Optimization**: Specialized logic for Solana's most liquid AMM pools.
-
-## 🧠 Multi-Agent Architecture
-Selena operates through an orchestration of specialized modules:
-1. **Selena Quant Engine**: Mathematically analyzes pool dynamics and slippage.
-2. **Selena Risk Sentinel**: Evaluates intents against strict security boundaries.
-3. **Selena Execution Router**: Formulates the final verdict and prepares the transaction intent for on-chain validation.
-
-## 🛠️ Tech Stack
-- **AI Orchestration**: CrewAI (Multi-Agent Framework)
-- **Inference Engine**: Groq (Llama 3.1 8B)
-- **Blockchain Focus**: Solana (Raydium V4 AMM)
-- **Language**: Python 3.11.9 (Core Logic), Rust/Anchor (On-chain Blueprint)
-
-## 🚦 System Status & Demo
-When running the engine, Selena performs a phased audit:
-- **Status: LIVE_VERIFIED** (Real-time Market Sync)
-- **Status: STRESS_TEST_MODE** (Internal Verified Simulation)
-
-### Example Output
-```text
-🧠 QUANT METRICS: Slippage 0.00033% | Price Impact 0.05%
-🛡️ RISK ASSESSMENT: CLEARED
-🚀 EXECUTION INTENT: COMPLIANT & READY
-🧾 SUMMARY: Confidence Score 99.99%
+![Logo](https://github.com/user-attachments/assets/253074ea-a5ad-45f1-accd-eb81a89ffa38)
 
 ---
 
-💻 Installation & Setup
-Clone the repository:
+## 🧠 Overview
 
-git clone [https://github.com/soraonchain-byte/Selena-Guardrails.git](https://github.com/soraonchain-byte/Selena-Guardrails.git)
+**Selena Guardrails** is an **Autonomous Security Oracle** designed to secure the emerging **Agentic Economy on Solana**.
+
+It acts as a **non-custodial validation layer** that ensures every AI-generated financial action is:
+
+- ✅ Mathematically sound  
+- ✅ Risk-aware  
+- ✅ Protocol-compliant  
+
+> Selena bridges the gap between **AI reasoning (off-chain)** and **financial execution (on-chain)** — optimized for **Raydium V4**.
+
+---
+
+## 🏛️ The Problem
+
+In the **Agentic Economy**, AI agents are becoming autonomous capital managers.
+
+However:
+
+- ❌ AI reasoning is non-deterministic  
+- ❌ Market conditions are volatile  
+- ❌ Execution risks are real-time  
+
+This leads to:
+
+- Slippage miscalculations  
+- Liquidity misjudgment  
+- Sandwich / MEV exposure  
+- Unsafe execution  
+
+---
+
+## 🚀 The Vision
+
+> **“Don’t trust AI blindly — verify it.”**
+
+Selena introduces a **Multi-Layered Guardrail System**:
+
+1. Intercept AI intent  
+2. Validate using deterministic logic  
+3. Enforce protocol safety  
+4. Emit execution verdict  
+
+---
+
+## ⚙️ Core Architecture
+
+Selena is a **Hybrid Intelligence System**:
+
+- 🧠 AI → reasoning  
+- ⚙️ Python → deterministic computation  
+- 🫀 Pulse System → orchestration  
+- ⛓️ Solana → execution  
+
+---
+
+## 🧩 System Flow Diagram
+
+```text
+[INPUT: INTENT] 
+      |
+      v
+[SORA PULSE ORCHESTRATOR] <--- Signal: TRIGGER (1)
+      |
+      v
+[DETERMINISTIC ENGINES (Python)]
+|-- Quant Engine: Slippage & Price Impact Math
+|-- Risk Engine: Threshold & Boundary Validation
+|-- Validator: Protocol-specific Security Rules
+      |
+      v
+[SORA PULSE ORCHESTRATOR] <--- Signal: PROCESSING (2)
+      |
+      v
+[COGNITIVE LAYER (CrewAI + Groq)]
+|-- Narrates the technical JSON into human-verifiable audits.
+|-- Issues the final 'Clearance' intent.
+      |
+      v
+[FINAL VERDICT: ON-CHAIN READY] <--- Signal: SUCCESS (3)
+```
+
+---
+
+## ✨ Key Features
+
+### 🧠 Multi-Agent Pipeline
+- Quant, Risk, Validator modules  
+- Independent verification layers  
+- Reduced hallucination  
+
+### 📊 Deterministic Quant Engine
+- Slippage calculation  
+- Price impact modeling  
+- Liquidity-aware logic  
+
+### 🛡️ Risk Enforcement
+- Hardcoded thresholds  
+- Exposure control  
+- Slippage boundaries  
+
+### 🫀 Sora Pulse Framework
+- Lightweight orchestration  
+- Trigger-based execution  
+- Efficient compute usage  
+
+### 🔄 Verified Simulation Layer
+- Works without live API  
+- Stable fallback system  
+- Stress-test ready  
+
+### ⚡ Raydium V4 Optimization
+- Tailored for AMM pools  
+- High-liquidity focus  
+- Solana-native execution  
+
+---
+
+## 🧠 Agent Modules
+
+| Module | Role |
+|------|------|
+| Quant Engine | Slippage & liquidity math |
+| Risk Sentinel | Safety rules enforcement |
+| Validator Engine | Protocol compliance |
+| Execution Router | Final intent output |
+
+---
+
+## 🛠️ Tech Stack
+
+- **AI Orchestration**: CrewAI  
+- **Inference**: Groq (Llama 3)  
+- **Blockchain**: Solana  
+- **DEX Target**: Raydium V4  
+
+**Languages:**
+- Python 3.11 → Off-chain logic  
+- Rust (Anchor) → On-chain layer  
+
+---
+
+## 🚦 System Modes
+
+### 🌐 LIVE_VERIFIED
+- Real-time data (Jupiter API)  
+- Full dynamic validation  
+
+### 🧪 STRESS_TEST_MODE
+- Simulation-based  
+- Stable fallback logic  
+
+---
+
+## 🎬 Example Output
+🧠 QUANT METRICS:
+
+Slippage: 0.00033%
+Price Impact: 0.05%
+
+🛡️ RISK ASSESSMENT:
+
+Status: CLEARED
+
+🚀 EXECUTION INTENT:
+
+Raydium V4 Compliant
+Ready for Validation
+
+🧾 SUMMARY:
+
+Confidence Score: 99.99%
+
+---
+
+## 💻 Installation & Setup
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/soraonchain-byte/Selena-Guardrails.git
 cd Selena-Guardrails
-Environment Setup:
-Create a .env file and add your credentials:
-
-# Selena Guardrails - API Configuration
-# Get your key from: https://console.groq.com/keys
+```
+--- 
+### 2. Setup Environment
+---
+Create .env file:
 GROQ_API_KEY=gsk_your_key_here_xxxx
+OPENAI_API_KEY=your_optional_key
 
-# Optional: If you use OpenAI in the future
-OPENAI_API_KEY=your_openai_key_here
-
-Run the Guardrails Engine:
-
+### 3. Run Engine
+---
 python main_integrated.py
 
 ---
