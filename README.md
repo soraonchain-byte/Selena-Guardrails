@@ -4,10 +4,6 @@
 # 🛡️ Selena Guardrails: Multi-Agent Security Layer for Solana
 <img width="3894" height="703" alt="Selena_logo_banner" src="https://github.com/user-attachments/assets/253074ea-a5ad-45f1-accd-eb81a89ffa38" />
 
-![Banner](https://github.com/user-attachments/assets/35a2d602-aa7c-4563-891a-4a9b2c6b351b)
-
-![Logo](https://github.com/user-attachments/assets/253074ea-a5ad-45f1-accd-eb81a89ffa38)
-
 ---
 
 ## 🧠 Overview
@@ -200,10 +196,34 @@ cd Selena-Guardrails
 Create .env file:
 GROQ_API_KEY=gsk_your_key_here_xxxx
 OPENAI_API_KEY=your_optional_key
-
-### 3. Run Engine
 ---
+### 3. Run Engine
+
 python main_integrated.py
 
 ---
-Built for the Solana Frontier Hackathon 2026 by Sora Onchain.
+
+# 🎯 Hackathon Value Proposition
+
+Selena is:
+
+## 🛡️ The Security Layer for Autonomous Finance
+
+### Why It Matters:
+- ✅ Solves real AI risk problem
+- ✅ Hybrid AI + deterministic system
+- ✅ Works even without APIs
+- ✅ Strong Raydium alignment
+- ✅ Modular & scalable
+
+## 🏁 Final Statement
+
+### “Execution is easy. Safety is everything.”
+
+### Selena ensures AI doesn’t just act — it acts safely.
+
+
+## 👤 Author
+
+Built for Solana Frontier Hackathon 2026
+by Sora Onchain
